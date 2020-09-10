@@ -1,5 +1,6 @@
-const appName = require("./app.js")
 const path = require("path")
+
+const appName = process.env.VUE_APP_NAME || 'star'
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -17,7 +18,7 @@ const config = {
     devServer: {},
     chainWebpack: (config) => {
       config.entry.app = ["babel-polyfill", "../src/app/star/main.ts"]
-      config.resolve.alias.set("@", resolve("../src/app/star/")).set("%", resolve("../src/common"))
+      config.resolve.alias.set("@star", resolve("../src/app/star/")).set("@", resolve("../src/"))
     }
   },
   country: {
@@ -32,11 +33,11 @@ const config = {
     devServer: {},
     chainWebpack: (config) => {
       config.entry.app = ["babel-polyfill", "../src/app/country/main.ts"]
-      config.resolve.alias.set("@", resolve("../src/app/country/")).set("%", resolve("../src/common"))
+      config.resolve.alias.set("@country", resolve("../src/app/country/")).set("@", resolve("../src/"))
     }
   }
 }
 
-const configObj = config[appName.name]
+const configObj = config[appName]
 
 module.exports = configObj
